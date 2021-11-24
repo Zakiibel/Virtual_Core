@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdint.h>
 #include <string.h>
 
+
+#define TAILLE_MAX 40
+#define MEMO_SIZE 256
 
 /**************** INTRODUCTION *****************
 A c PROGRAM to create a virtual cpu with the simplest architecture
@@ -21,7 +25,10 @@ registers : begin with r :            r0, r1, r2, r3
 Immediat values IV  begin with # :    #20, #250
 Memory addresses begin with @ :       @1505, @250
 */
-unsigned prog[] = { 0x1064, 0x11C8, 0x2201, 0x0000 };
+
+/*Memoire de taille 64bits */
+uint64_t memory[MEMO_SIZE] ;
+int memo_idx = 0;  //indice de memoire
 
 /***Registers****/
 enum {
@@ -31,7 +38,8 @@ enum {
   r3,
   R_COUNT
 };
-unsigned regs[R_COUNT];
+/*    Table des registres sur 64bits */
+uint64_t regs[R_COUNT];
 
 
 /**********  instruction codes ***************
@@ -62,7 +70,7 @@ Execute : execute the decode instruction
 int pc = 0 ;// Program counter
 int fetch()
 {
-  return prog[pc++];
+  return memory[pc++];
 }
 /*****DECODE****/
 int instrNum = 0;
@@ -134,13 +142,39 @@ void run(int verbose)
 /***************** MAIN ********************/
 int main(int argc, char const *argv[])
 {
-  if (argc != 3) {
+  if ((argc != 3) || ((atoi(argv[2])!=1) && (atoi(argv[2])!=0)))
+  {
     printf("Number of args invalid\nTo run the program \nWith verbose mode :  %s code 1\nWithout verbose mode :  %s code 0\n",argv[0],argv[0]);
     printf("code is the binary file containing instructions\n");
     exit(0);
   }
   int verbose = atoi(argv[2]);
+  FILE* fcode = NULL;
+  fcode = fopen(argv[1], "r");
+  char ligne[TAILLE_MAX] = "";
+  if (fcode != NULL)
+  {
+    while (fgets(ligne, TAILLE_MAX, fcode) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+    {
+      int b=1;
+      for (int i = 0; i < strlen(ligne)-1; i++)
+      {
+        b=b<<1;
+        if (ligne[i]=='1') {b++;}
+      }
+      memory[memo_idx] =b & 0xffff;
+      memo_idx++;
+    }
+    fclose(fcode);
+  }
+  else
+  {
+    // On affiche un message d'erreur si on veut
+    printf("Impossible d'ouvrir le fichier test.txt");
+      exit(0);
+  }
+  
+
   run(verbose);
-//  printf("%04X\n",prog[0] );
   return 0;
 }
