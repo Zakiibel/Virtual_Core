@@ -112,7 +112,34 @@ int execute()
       break;
   }
 }
-
+/* REad instruction from binary file*/
+void read_file(char const * file)
+{
+  FILE* fcode = NULL;
+  fcode = fopen(file, "r");
+  char ligne[TAILLE_MAX] = "";
+  if (fcode != NULL)
+  {
+    while (fgets(ligne, TAILLE_MAX, fcode) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+    {
+      int b=1;
+      for (int i = 0; i < strlen(ligne)-1; i++)
+      {
+        b=b<<1;
+        if (ligne[i]=='1') {b++;}
+      }
+      memory[memo_idx] =b & 0xffff;
+      memo_idx++;
+    }
+    fclose(fcode);
+  }
+  else
+  {
+    // On affiche un message d'erreur si on veut
+    printf("Impossible d'ouvrir le fichier test.txt");
+      exit(0);
+  }
+}
 
 /* display all registers as 4-digit hexadecimal words */
 void showRegs()
@@ -149,32 +176,7 @@ int main(int argc, char const *argv[])
     exit(0);
   }
   int verbose = atoi(argv[2]);
-  FILE* fcode = NULL;
-  fcode = fopen(argv[1], "r");
-  char ligne[TAILLE_MAX] = "";
-  if (fcode != NULL)
-  {
-    while (fgets(ligne, TAILLE_MAX, fcode) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
-    {
-      int b=1;
-      for (int i = 0; i < strlen(ligne)-1; i++)
-      {
-        b=b<<1;
-        if (ligne[i]=='1') {b++;}
-      }
-      memory[memo_idx] =b & 0xffff;
-      memo_idx++;
-    }
-    fclose(fcode);
-  }
-  else
-  {
-    // On affiche un message d'erreur si on veut
-    printf("Impossible d'ouvrir le fichier test.txt");
-      exit(0);
-  }
-  
-
+  read_file(argv[1]);
   run(verbose);
   return 0;
 }
