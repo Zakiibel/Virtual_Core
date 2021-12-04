@@ -9,9 +9,7 @@
 
 
 #include "functions.h"
-#include "fetch.h"
-#include "decode.h"
-#include "execute.h"
+
 
 
 
@@ -35,9 +33,11 @@ Memory addresses begin with @ :       @1505, @250
 */
 
 
-/*Memoire de taille 64bits */
+/*Memoire de taille 64bits*/
 uint64_t memory[MEMO_SIZE] ;
-int memo_idx = 0;  //indice de memoire
+
+/*    Table des registres sur 64bits*/
+uint64_t regs[R_COUNT];
 
 /***************** MAIN ********************/
 int main(int argc, char const *argv[])
@@ -49,7 +49,11 @@ int main(int argc, char const *argv[])
     exit(0);
   }
   int verbose = atoi(argv[2]);
+  //showRegs();
+  //printf("************************************\n");
   read_file(argv[1]);
+  showMemory();
+  printf("************************************\n");
   run(verbose);
   return 0;
 }

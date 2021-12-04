@@ -5,24 +5,30 @@
 \date 05/11/2021
 \brief Virtual Core
 */
-
+#include "functions.h"
 #include "decode.h"
 
 
 
+
 /*****DECODE****/
-int instrNum = 0;
-//operands
-/* Initializing the registers */
-int reg1 = 0;
-int reg2 = 0;
-int reg3 = 0;
-int immv = 0;
 int decode(int instr)
 {
-  instrNum = (instr & 0xF000) >> 12;
-  reg1 = (instr & 0xF00) >> 8;
-  reg2 = (instr & 0xF0) >> 4;
-  reg3 = (instr & 0xF);
-  immv = (instr & 0xFF);
+  /*  [
+  32 bits of instructions;
+  31-28 : 4bits for BCC;
+  ;27-25 : 3bits always 0;
+  24 : 1 bit IV Flag;
+  23-20 : 4bits for Opcode;
+  19-16 : 4 bits for ope1;
+  15-12: 4 bits for ope2;
+  11-8 : 4bits for dest register;
+  7-0 : 8 bits for IV]*/
+  regs[R_R4] = (instr & 0xF0000000) >> 28;   //BCC
+  regs[R_R5] = (instr & 0x1000000) >> 24;    //FLAG
+  regs[R_R6] = (instr & 0xF00000) >> 20;     //OPCODE
+  regs[R_R7] = (instr & 0xF0000) >> 16;      //OPE1
+  regs[R_R8] = (instr & 0xF000) >> 12;        //OPE2
+  regs[R_R9] = (instr & 0xF00) >> 8;          //DEST
+  regs[R_R10] = (instr & 0xFF);               //IV
 }

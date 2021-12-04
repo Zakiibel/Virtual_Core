@@ -7,7 +7,9 @@
 */
 
 #include "functions.h"
-
+#include "fetch.h"
+#include "decode.h"
+#include "execute.h"
 
 
 /* Read instruction from binary file*/
@@ -26,10 +28,11 @@ void read_file(char const * file)
         b=b<<1;
         if (ligne[i]=='1') {b++;}
       }
-      memory[memo_idx] =b & 0xffff;
-      memo_idx++;
+      memory[regs[R_R3]] =b & 0xffffffff;
+      regs[R_R3]++;
     }
     fclose(fcode);
+    regs[R_R3] = 0;
   }
   else
   {
@@ -39,27 +42,36 @@ void read_file(char const * file)
   }
 }
 
-
 /* display all registers as 4-digit hexadecimal words */
 void showRegs()
 {
   int i;
   printf( "regs = " );
   for( i=0; i<R_COUNT; i++ )
-    printf( "%04X ", regs[ i ] );
+    printf( "%08X ", regs[ i ] );
   printf( "\n" );
 }
+
+/* display memory as 16-digit in hexadecimal */
+void showMemory()
+{
+  int i;
+  printf( "Memory =\n" );
+  for( i=0; i<MEMSIZ; i++ )  //nmbre de ligne dans le fichier code
+    printf( "%016X\n", memory[ i ] );
+}
+
+
 
 /********* RUN  ********/
 void run(int verbose)
 {
   while (running)
   {
-    if (verbose) {
-      showRegs();
-    }
-    int instruction = fetch();
-    decode(instruction);
+    if (verbose) {showRegs();}
+    regs[R_R15_IR] = fetch();
+    decode(regs[R_R15_IR]);
     execute();
+
   }
 }

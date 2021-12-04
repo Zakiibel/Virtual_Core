@@ -6,8 +6,8 @@
 \brief Virtual Core
 */
 
+#include "functions.h"
 #include "execute.h"
-
 
 
 /*****EXECUTE***/
@@ -15,22 +15,39 @@ int running = 1;
 /* Evaluate the last decoded instruction */
 int execute()
 {
-  switch (instrNum)
+  switch (regs[R_R6])
   {
-    case halt:
+    case OP_HALT:
       /* Halt */
-      printf("halt\n");
+      printf("HALT\n");
       running = 0;
       break;
-    case loadi:
-      /* Loadi */
-      printf("loadi r%d #%d\n",reg1,immv);
-      regs[reg1] = immv;
+    case OP_MOV:
+      if (regs[R_R5] == 0)
+      {
+        // MOV r1, r2  R1: dest  && r2:OPe1
+        printf("MOV r%d, r%d\n",regs[R_R9],regs[R_R7] );
+        regs[regs[R_R9]] = regs[regs[R_R7]];
+      }
+      else{
+        // MOV r1, iv  re1:dest
+        printf("MOV r%d, %d\n",regs[R_R9],regs[R_R10]);
+        regs[regs[R_R9]] = regs[R_R10];
+      }
       break;
-    case add:
-      /* Add */
-      printf("add r%d r%d r%d\n",reg1,reg2,reg3 );
-      regs[reg1] = regs[reg2] + regs[reg3];
+    case OP_ADD:
+      if (regs[R_R5] == 0)
+      {
+        // ADD r1, r2, r3  r1 = r2+r3
+        printf("ADD r%d, r%d, r%d\n",regs[R_R9],regs[R_R7],regs[R_R8] );
+        regs[regs[R_R9]] = regs[regs[R_R7]] + regs[regs[R_R8]];
+      }
+      else{
+        // ADD r1, r2, iv   r1 = r2+iv
+        printf("MOV r%d, r%d, %d\n",regs[R_R9],regs[R_R7],regs[R_R10]);
+        regs[regs[R_R9]] = regs[regs[R_R7]] + regs[R_R10];
+      }
       break;
   }
+  return 0;
 }
