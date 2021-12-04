@@ -252,7 +252,7 @@ void showMemory()
 
 /********* RUN  ********/
 void run(int verbose)
-
+{
   while (running)
   {
     if (verbose) {showRegs();}
