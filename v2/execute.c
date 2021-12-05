@@ -11,7 +11,7 @@
 
 
 /*****EXECUTE***/
-int running = 1;
+//int running = 1;
 /* Evaluate the last decoded instruction */
 int execute()
 {
@@ -20,7 +20,7 @@ int execute()
     case OP_HALT:
       /* Halt */
       printf("HALT\n");
-      running = 0;
+      //running = 0;
       break;
     case OP_MOV:
       if (regs[R_R5] == 0)

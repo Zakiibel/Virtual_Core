@@ -42,18 +42,23 @@ uint64_t regs[R_COUNT];
 /***************** MAIN ********************/
 int main(int argc, char const *argv[])
 {
-  if ((argc != 3) || ((atoi(argv[2])!=1) && (atoi(argv[2])!=0)))
+  if ((argc != 4) || ((atoi(argv[3])!=1) && (atoi(argv[3])!=0)))
   {
-    printf("Number of args invalid\nTo run the program \nWith verbose mode :  %s code 1\nWithout verbose mode :  %s code 0\n",argv[0],argv[0]);
+    printf("invalid Number of args\n");
+    printf("To run the program \n");
+    printf("With verbose mode :  %s code regState 1\n",argv[0]);
+    printf("Without verbose mode :  %s code regState 0\n",argv[0]);
     printf("code is the binary file containing instructions\n");
+    printf("regState is the  file containing initial state of registers\n");
     exit(0);
   }
-  int verbose = atoi(argv[2]);
-  //showRegs();
-  //printf("************************************\n");
-  read_file(argv[1]);
-  showMemory();
-  printf("************************************\n");
-  run(verbose);
+  int verbose = atoi(argv[3]);
+  //init_regs(argv[2]);
+  // showRegs();
+
+  //read_file(argv[1]);
+  //showMemory();
+
+  //run(verbose);
   return 0;
 }

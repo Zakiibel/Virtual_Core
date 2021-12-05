@@ -13,52 +13,70 @@
 
 
 /* Read instruction from binary file*/
-void read_file(char const * file)
+void init_regs(char const * file)
 {
-  FILE* fcode = NULL;
-  fcode = fopen(file, "r");
+  int j=0;
+  FILE* fregState = NULL;
+  fregState = fopen(file, "r");
   char ligne[TAILLE_MAX] = "";
-  if (fcode != NULL)
+  if (fregState != NULL)
   {
-    while (fgets(ligne, TAILLE_MAX, fcode) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+    while (fgets(ligne, TAILLE_MAX, fregState) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
     {
-      int b=1;
-      for (int i = 0; i < strlen(ligne)-1; i++)
+      uint64_t a= 1;
+      for (int i = 5; i < strlen(ligne)-1; i++)
       {
-        b=b<<1;
-        if (ligne[i]=='1') {b++;}
+        a=a<<4;
+        //printf("%016X\n",a);
+        switch (ligne[i]) {
+          case 49: a++;  break;
+          case 50: a+=2; break;
+          case 51: a+=3; break;
+          case 52: a+=4; break;
+          case 53: a+=5; break;
+          case 54: a+=6; break;
+          case 55: a+=7; break;
+          case 56: a+=8; break;
+          case 57: a+=9; break;
+          case 97: a+=10;break;
+          case 98: a+=11;break;
+          case 99: a+=12;break;
+          case 100:a+=13;break;
+          case 101:a+=14;break;
+          case 102:a+=15;break;
+        }
       }
-      memory[regs[R_R3]] =b & 0xffffffff;
-      regs[R_R3]++;
+      regs[j] = a & 0xffffffffffffffff;
+      j++;
     }
-    fclose(fcode);
-    regs[R_R3] = 0;
+    fclose(fregState);
   }
   else
   {
     // On affiche un message d'erreur si on veut
-    printf("Impossible d'ouvrir le fichier test.txt");
+    printf("Registers File can not be opened");
       exit(0);
   }
 }
+
+
 
 /* display all registers as 4-digit hexadecimal words */
 void showRegs()
 {
   int i;
-  printf( "regs = " );
+  printf("***** Registers *******\n");
   for( i=0; i<R_COUNT; i++ )
-    printf( "%08X ", regs[ i ] );
-  printf( "\n" );
+    printf( "R%d = 0x%016lX\n",i, regs[ i ] );
 }
 
 /* display memory as 16-digit in hexadecimal */
 void showMemory()
 {
   int i;
-  printf( "Memory =\n" );
+  printf( "******** Memory ********\n" );
   for( i=0; i<MEMSIZ; i++ )  //nmbre de ligne dans le fichier code
-    printf( "%016X\n", memory[ i ] );
+    printf( "0x%016lX\n", memory[ i ] );
 }
 
 
@@ -66,7 +84,7 @@ void showMemory()
 /********* RUN  ********/
 void run(int verbose)
 {
-  while (running)
+  while (regs[R_R6] != 11)
   {
     if (verbose) {showRegs();}
     regs[R_R15_IR] = fetch();

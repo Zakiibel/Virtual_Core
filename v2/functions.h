@@ -83,6 +83,7 @@ enum  /* BCC */
 
 
 void read_file(char const * file);
+void init_regs(char const * file);
 void showRegs();
 void showMemory();
 void run();
