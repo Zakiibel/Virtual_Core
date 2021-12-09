@@ -11,6 +11,37 @@
 #include "decode.h"
 #include "execute.h"
 
+/* Read instruction from binary file*/
+void read_file(char const * file)
+{
+  FILE* fcode = NULL;
+  fcode = fopen(file, "r");
+  char ligne[TAILLE_MAX] = "";
+  if (fcode != NULL)
+  {
+    while (fgets(ligne, TAILLE_MAX, fcode) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+    {
+      uint64_t b=1;
+      for (int i = 0; i < strlen(ligne)-1; i++)
+      {
+        b=b<<1;
+        if (ligne[i]=='1') {b++;}
+      }
+      memory[decoder[R_R3]] =b & 0xffffffff;
+      //printf("%016lx\n",b&0xffffffff );
+      decoder[R_R3]++;
+    }
+    fclose(fcode);
+    decoder[R_R3] = 0;
+  }
+  else
+  {
+    // On affiche un message d'erreur si on veut
+    printf("Impossible d'ouvrir le fichier memory");
+      exit(0);
+  }
+}
+
 
 /* Read instruction from binary file*/
 void init_regs(char const * file)
@@ -84,7 +115,7 @@ void showMemory()
 /********* RUN  ********/
 void run(int verbose)
 {
-  while (regs[R_R6] != 11)
+  while (decoder[R_R6] != 11)
   {
     if (verbose) {showRegs();}
     regs[R_R15_IR] = fetch();

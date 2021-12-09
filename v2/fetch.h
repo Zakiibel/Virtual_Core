@@ -9,6 +9,7 @@
 #ifndef PROJET_FETCH_H
 #define PROJET_FETCH_H
 
+#include "execute.h"
 
 int fetch();
 

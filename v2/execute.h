@@ -9,6 +9,9 @@
 #ifndef PROJET_EXECUTE_H
 #define PROJET_EXECUTE_H
 
+extern uint64_t op1;
+extern uint64_t op2;
+
 int execute();
 
 #endif //PROJET_EXECUTE_H

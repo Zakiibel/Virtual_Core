@@ -18,13 +18,14 @@
 
 #define TAILLE_MAX 40
 #define MEMO_SIZE 512
-#define MEMSIZ 4
+#define MEMSIZ 10
 
 
 
 /*Memoire de taille 64bits */
 extern uint64_t memory[MEMO_SIZE] ;
-extern int running;
+//extern int running;
+extern int verbose;
 /***Registers****/
 enum //enumeration I have no idea about this , Yes I do
 {
@@ -51,6 +52,8 @@ enum //enumeration I have no idea about this , Yes I do
 /*    Table des registres sur 64bits */
 extern uint64_t regs[R_COUNT];
 
+/* decode instr */
+extern int decoder[16];
 
 /** instruction number ***/
 enum  /* OPCPDE */

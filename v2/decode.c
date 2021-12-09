@@ -8,11 +8,11 @@
 #include "functions.h"
 #include "decode.h"
 
-
+int decoder[16];
 
 
 /*****DECODE****/
-int decode(int instr)
+void decode(int instr)
 {
   /*  [
   32 bits of instructions;
@@ -24,11 +24,11 @@ int decode(int instr)
   15-12: 4 bits for ope2;
   11-8 : 4bits for dest register;
   7-0 : 8 bits for IV]*/
-  regs[R_R4] = (instr & 0xF0000000) >> 28;   //BCC
-  regs[R_R5] = (instr & 0x1000000) >> 24;    //FLAG
-  regs[R_R6] = (instr & 0xF00000) >> 20;     //OPCODE
-  regs[R_R7] = (instr & 0xF0000) >> 16;      //OPE1
-  regs[R_R8] = (instr & 0xF000) >> 12;        //OPE2
-  regs[R_R9] = (instr & 0xF00) >> 8;          //DEST
-  regs[R_R10] = (instr & 0xFF);               //IV
+  decoder[R_R4] = (instr & 0xF0000000) >> 28;   //BCC
+  decoder[R_R5] = (instr & 0x1000000) >> 24;    //FLAG
+  decoder[R_R6] = (instr & 0xF00000) >> 20;     //OPCODE
+  decoder[R_R7] = (instr & 0xF0000) >> 16;      //OPE1
+  decoder[R_R8] = (instr & 0xF000) >> 12;        //OPE2
+  decoder[R_R9] = (instr & 0xF00) >> 8;          //DEST
+  decoder[R_R10] = (instr & 0xFF);               //IV
 }

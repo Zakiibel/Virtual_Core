@@ -9,6 +9,6 @@
 #ifndef PROJET_DECODE_H
 #define PROJET_DECODE_H
 
-int decode(int instr);
+void decode(int instr);
 
 #endif //PROJET_DECODE_H

@@ -11,6 +11,8 @@
 #include "functions.h"
 
 
+int verbose;
+
 
 
 
@@ -52,13 +54,13 @@ int main(int argc, char const *argv[])
     printf("regState is the  file containing initial state of registers\n");
     exit(0);
   }
-  int verbose = atoi(argv[3]);
-  //init_regs(argv[2]);
+  verbose = atoi(argv[3]);
+//  init_regs(argv[2]);
   // showRegs();
 
-  //read_file(argv[1]);
-  //showMemory();
+  read_file(argv[1]);
+  showMemory();
 
-  //run(verbose);
+  run(verbose);
   return 0;
 }
