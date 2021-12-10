@@ -17,20 +17,20 @@ all : $(EXEC) clean
 VCORE : execute.o decode.o fetch.o functions.o main.o
 			$(CC) execute.o decode.o fetch.o functions.o main.o -lm -o VCORE
 
-execute.o : execute.c
-			$(CC) -c execute.c  -o execute.o $(CFLAGS)
+execute.o : src/execute.c
+			$(CC) -c src/execute.c  -o execute.o $(CFLAGS)
 
-decode.o : decode.c
-			$(CC) -c decode.c  -o decode.o $(CFLAGS)
+decode.o : src/decode.c
+			$(CC) -c src/decode.c  -o decode.o $(CFLAGS)
 
-fetch.o : fetch.c
-			$(CC) -c fetch.c  -o fetch.o $(CFLAGS)
+fetch.o : src/fetch.c
+			$(CC) -c src/fetch.c  -o fetch.o $(CFLAGS)
 
-functions.o : functions.c
-			$(CC) -c functions.c  -o functions.o $(CFLAGS)
+functions.o : src/functions.c
+			$(CC) -c src/functions.c  -o functions.o $(CFLAGS)
 
-main.o : main.c
-			$(CC) -c main.c  -o main.o $(CFLAGS)
+main.o : src/main.c
+			$(CC) -c src/main.c  -o main.o $(CFLAGS)
 
 clean :
 			rm -rf *.o

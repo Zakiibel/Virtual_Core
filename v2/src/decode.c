@@ -8,7 +8,7 @@
 #include "functions.h"
 #include "decode.h"
 
-int decoder[16];
+char decoder[16];
 
 
 /*****DECODE****/
@@ -24,6 +24,7 @@ void decode(int instr)
   15-12: 4 bits for ope2;
   11-8 : 4bits for dest register;
   7-0 : 8 bits for IV]*/
+  //decoder[R_R3] = (instr & 0x4000000) >> 27;   //BCC
   decoder[R_R4] = (instr & 0xF0000000) >> 28;   //BCC
   decoder[R_R5] = (instr & 0x1000000) >> 24;    //FLAG
   decoder[R_R6] = (instr & 0xF00000) >> 20;     //OPCODE

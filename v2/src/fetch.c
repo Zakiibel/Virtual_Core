@@ -19,18 +19,12 @@ int fetch()
     case BCC_B:
       printf("B %d\n",decoder[R_R10]);
       regs[R_R14_PC]+=decoder[R_R10] -1;
-      //regs[R_R13_MAR] = regs[R_R14_PC];
-      //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-      if (verbose) {showRegs();}
       break;
 
     case BCC_BEQ:
     if (op1 == op2) {
       printf("BEQ %d\n",decoder[R_R10]);
       regs[R_R14_PC] +=  decoder[R_R10] -1;
-      //regs[R_R13_MAR] = regs[R_R14_PC];
-      //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-      if (verbose) {showRegs();}
     }
       break;
 
@@ -38,9 +32,6 @@ int fetch()
       if (op1 != op2) {
         printf("BNE %d\n",decoder[R_R10]);
         regs[R_R14_PC] +=  decoder[R_R10] -1;
-        //regs[R_R13_MAR] = regs[R_R14_PC];
-        //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-        if (verbose) {showRegs();}
       }
       break;
 
@@ -48,9 +39,6 @@ int fetch()
       if (op1 <= op2) {
         printf("BLE %d\n",decoder[R_R10]);
         regs[R_R14_PC] +=  decoder[R_R10] -1;
-        //regs[R_R13_MAR] = regs[R_R14_PC];
-        //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-        if (verbose) {showRegs();}
       }
       break;
 
@@ -58,9 +46,6 @@ int fetch()
       if (op1 >= op2) {
         printf("BGE %d\n",decoder[R_R10]);
         regs[R_R14_PC] +=  decoder[R_R10] -1;
-        //regs[R_R13_MAR] = regs[R_R14_PC];
-        //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-        if (verbose) {showRegs();}
       }
       break;
 
@@ -68,9 +53,6 @@ int fetch()
       if (op1 < op2) {
         printf("BL %d\n",decoder[R_R10]);
         regs[R_R14_PC] +=  decoder[R_R10] - 1;
-        //regs[R_R13_MAR] = regs[R_R14_PC];
-        //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-        if (verbose) {showRegs();}
       }
       break;
 
@@ -78,16 +60,10 @@ int fetch()
       if (op1 > op2) {
         printf("BG %d\n",decoder[R_R10]);
         regs[R_R14_PC] +=  decoder[R_R10] - 1;
-        //regs[R_R13_MAR] = regs[R_R14_PC];
-        //regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
-        if (verbose) {showRegs();}
       }
       break;
-
-  //  default:
-    //  regs[R_R14_PC]++;
-    //  break;
   }
+  if (verbose) {showRegs();}
   regs[R_R13_MAR] = regs[R_R14_PC];
   regs[R_R12_MDR] = memory[regs[R_R13_MAR]];
   regs[R_R14_PC]++;

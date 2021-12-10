@@ -53,7 +53,7 @@ enum //enumeration I have no idea about this , Yes I do
 extern uint64_t regs[R_COUNT];
 
 /* decode instr */
-extern int decoder[16];
+extern char decoder[16];
 
 /** instruction number ***/
 enum  /* OPCPDE */

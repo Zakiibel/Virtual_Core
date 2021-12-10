@@ -14,6 +14,7 @@
 /* Read instruction from binary file*/
 void read_file(char const * file)
 {
+  int j=0;
   FILE* fcode = NULL;
   fcode = fopen(file, "r");
   char ligne[TAILLE_MAX] = "";
@@ -27,12 +28,12 @@ void read_file(char const * file)
         b=b<<1;
         if (ligne[i]=='1') {b++;}
       }
-      memory[decoder[R_R3]] =b & 0xffffffff;
+      memory[j] =b & 0xffffffff;
       //printf("%016lx\n",b&0xffffffff );
-      decoder[R_R3]++;
+      j++;
     }
     fclose(fcode);
-    decoder[R_R3] = 0;
+    j = 0;
   }
   else
   {
@@ -117,7 +118,7 @@ void run(int verbose)
 {
   while (decoder[R_R6] != 11)
   {
-    if (verbose) {showRegs();}
+  //  if (verbose) {showRegs();}
     regs[R_R15_IR] = fetch();
     decode(regs[R_R15_IR]);
     execute();
