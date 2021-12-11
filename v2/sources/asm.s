@@ -1,0 +1,9 @@
+MOV r0, 100
+CMP r0, 100
+BLE 4
+SBC 10
+SBC 10
+SBC 10
+MOV r1, -50
+ADD r2, r1, r0
+HALT
