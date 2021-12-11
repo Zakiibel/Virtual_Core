@@ -1,9 +1,9 @@
 MOV r0, 100
-CMP r0, 100
-BLE 4
-SBC 10
-SBC 10
-SBC 10
-MOV r1, -50
-ADD r2, r1, r0
+CMP r0, 10
+bg 4
+B 1
+B 1
+B 1
+mov r1, 1
+rsh r2, r0, 1
 HALT

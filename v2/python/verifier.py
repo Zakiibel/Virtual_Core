@@ -1,4 +1,4 @@
-with open("sources/code1","r") as code1F, open("sources/code","r") as codeF, open("sources/asm.s") as asmF:
+with open("/home/kali/Documents/carte a puce/Projet/v2/sources/code1","r") as code1F, open("/home/kali/Documents/carte a puce/Projet/v2/sources/code","r") as codeF, open("/home/kali/Documents/carte a puce/Projet/v2/sources/asm.s") as asmF:
     code = codeF.readlines()
     code1 = code1F.readlines()
     asm = asmF.readlines()

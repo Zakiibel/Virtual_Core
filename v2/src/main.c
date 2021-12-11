@@ -48,8 +48,8 @@ int main(int argc, char const *argv[])
   {
     printf("invalid Number of args\n");
     printf("To run the program \n");
-    printf("With verbose mode :  %s code regState 1\n",argv[0]);
-    printf("Without verbose mode :  %s code regState 0\n",argv[0]);
+    printf("With verbose mode :  %s sources/code sources/regState 1\n",argv[0]);
+    printf("Without verbose mode :  %s sources/code sources/regState 0\n",argv[0]);
     printf("code is the binary file containing instructions\n");
     printf("regState is the  file containing initial state of registers\n");
     exit(0);
