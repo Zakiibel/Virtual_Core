@@ -1,0 +1,8 @@
+CMP r0, r1
+BG 4
+MOV r2, 48
+ADD r2, r2, 127
+B3
+MOV r2, 127
+ADD r2, r2, 127
+HALT

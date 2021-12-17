@@ -1,3 +1,15 @@
-# Virtual_Core
+A c PROGRAM to create a virtual cpu with the simplest architecture
 
-The core must be an executable file able to run on an up-to-date 64 bits
+WHY C :
+It's a very simple language that allows the writing of concise programs.
+It's a low level language with some high-level features. This makes it a good choice for creating a VM.
+
+Pour compiler taper les 3 commandes suivante
+make -f Makefile
+python3 python/compiler.py asm_file.s binary_file
+./VCORE bin/code sources/regState 1 (ou 0)
+
+
+Pour ce qui est du Doxyfile, il suffit de :
+	doxygen Doxyfile
+	puis allez dans le dossier html, puis ouvrez index.html et dans l'onglet fichiers

@@ -11,6 +11,7 @@
 
 extern uint64_t op1;
 extern uint64_t op2;
+extern int carry;
 
 int execute();
 

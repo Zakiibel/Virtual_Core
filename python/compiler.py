@@ -1,5 +1,8 @@
 #!/bibn/python3
 
+
+import sys
+
 #return binary representation of immidiate value
 def immValue(iv,bits=8):
     intVlaue = int(iv)
@@ -13,14 +16,13 @@ def immValue(iv,bits=8):
             value = "0"*bits
         return value
     else :
-        return (iv+" :Immidiate value out of [-128;127]")
+        print(iv +" :Immidiate value out of [-128;127]")
+        quit()
 
-def affect(str1,str2,i,j):
-    return str1[:i] + str2+ str1[j:]
+
 
 #split instruction to blocs
 def splitCode(instr):
-    #instrBin = "0"*32
     bcc = "0000"
     flag = "0000"
     opcode = "0000"
@@ -31,30 +33,22 @@ def splitCode(instr):
     instr = instr.upper()
     blocs = instr.split(" ")    #string to list
     if len(blocs)==1:           #HALT
-        #instrBin = affect(instrBin,"1011",8,12)
         opcode = "1011"
-
 
     elif len(blocs) == 2 :        #BCC
         iv = immValue(blocs[1])
         if (blocs[0])=="B" :
             bcc = "1000"
-
         elif blocs[0] == "BEQ" :
             bcc = "1001"
-
         elif blocs[0] == "BNE" :
             bcc = "1010"
-
         elif blocs[0] == "BLE" :
             bcc = "1011"
-
         elif blocs[0] == "BGE" :
             bcc = "1100"
-
         elif blocs[0] == "BL" :
             bcc = "1101"
-
         elif blocs[0] == "BG" :
             bcc = "1110"
         else :
@@ -65,27 +59,22 @@ def splitCode(instr):
 
     elif len(blocs) == 3 :   #MOV & CMP
         if blocs[0]=="MOV":
-            opcode = "1000" #instrBin = affect(instrBin,"1000",8,12)
-            dest = immValue(blocs[1][1:-1],4) #instrBin = affect(instrBin,immValue(blocs[1][1:-1],4),20,24)
+            opcode = "1000"
+            dest = immValue(blocs[1][1:-1],4)
             if blocs[2][0]=='R':
-                #instrBin[12:16]
                 ope1= immValue(blocs[2][1:],4)
             else:
                 flag = "0001"
-                #instrBin[-8:]
                 iv = immValue(blocs[2])
 
         elif blocs[0]=="CMP":
-            #instrBin[8:12]
             opcode = "0101"
-            #instrBin[12:16]
             ope1 = immValue(blocs[1][1:-1],4)
             if blocs[2][0]=='R':
-                #instrBin[16:20]
                 ope2 = immValue(blocs[2][1:],4)
+
             else:
                 flag = "0001"
-                #instrBin[-8:]
                 iv = immValue(blocs[2])
         else :
             print("OPCODE Incorrect")
@@ -95,16 +84,12 @@ def splitCode(instr):
 
 
     elif len(blocs) == 4 :   #AND, ORR, EOR, ADD, ADC, SUB, SBC, LSH, RSH
-        #instrBin[20:24]
         dest = immValue(blocs[1][1:-1],4)
-        #instrBin[12:16]
         ope1 = immValue(blocs[2][1:-1],4)
         if blocs[3][0]=='R':
-            #instrBin[16:20]
             ope2 = immValue(blocs[3][1:],4)
         else:
             flag = "0001"
-            #instrBin[-8:]
             iv = immValue(blocs[3])
 
         if blocs[0]=="AND":
@@ -138,12 +123,12 @@ def splitCode(instr):
     return bcc+flag+opcode+ope1+ope2+dest+iv+"\n"
 
 #Open asm File and get the instructions
-with open("/home/kali/Documents/carte a puce/Projet/v2/sources/asm.s","r") as asmFile:
+with open("/home/kali/Documents/carte a puce/Projet/v2/assembly/"+sys.argv[1],"r") as asmFile:
     instructions = asmFile.readlines()
     asmFile.close()
 
 
-with open("/home/kali/Documents/carte a puce/Projet/v2/sources/code","w") as code:
+with open("/home/kali/Documents/carte a puce/Projet/v2/bin/"+sys.argv[2],"w") as code:
     for e in instructions:
         code.writelines(splitCode(e[:-1]))
     code.close()

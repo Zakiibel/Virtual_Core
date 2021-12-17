@@ -48,15 +48,15 @@ int main(int argc, char const *argv[])
   {
     printf("invalid Number of args\n");
     printf("To run the program \n");
-    printf("With verbose mode :  %s sources/code sources/regState 1\n",argv[0]);
+    printf("With verbose mode :  %s bin/code sources/regState 1\n",argv[0]);
     printf("Without verbose mode :  %s sources/code sources/regState 0\n",argv[0]);
     printf("code is the binary file containing instructions\n");
     printf("regState is the  file containing initial state of registers\n");
     exit(0);
   }
   verbose = atoi(argv[3]);
-//  init_regs(argv[2]);
-  // showRegs();
+  init_regs(argv[2]);
+  //showRegs();
 
   read_file(argv[1]);
   showMemory();

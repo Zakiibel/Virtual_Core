@@ -11,7 +11,7 @@
 
 uint64_t op1; //used for CMP
 uint64_t op2; //used for CMP
-
+int carry = 0;
 /*****EXECUTE***/
 //int running = 1;
 /* Evaluate the last decoded instruction */
@@ -73,10 +73,12 @@ int execute()
         printf("ADD r%d, r%d, %d\n",decoder[R_R9],decoder[R_R7],decoder[R_R10]);
         regs[decoder[R_R9]] = regs[decoder[R_R7]] + decoder[R_R10];
       }
+      if (regs[decoder[R_R9]] >= INTMAX_MAX ) { carry = 1;}
       break;
 
     case OP_ADC:
-      /*if (decoder[R_R5] == 0)
+
+      if (decoder[R_R5] == 0)
       {
         // ADC r1, r2, r3  r1 = r2+r3+carry
         printf("ADC r%d, r%d, r%d\n",decoder[R_R9],decoder[R_R7],decoder[R_R8] );
@@ -86,12 +88,12 @@ int execute()
         // ADC r1, r2, iv   r1 = r2+iv+carry
         printf("ADC r%d, r%d, %d\n",decoder[R_R9],decoder[R_R7],decoder[R_R10]);
         regs[decoder[R_R9]] = regs[decoder[R_R7]] + decoder[R_R10] + carry;
-      }*/
+      }
       break;
 
     case OP_CMP:
       if (decoder[R_R5]==0) {
-        printf("CMP r%d, %d\n",decoder[R_R7],decoder[R_R8]);
+        printf("CMP r%d, r%d\n",decoder[R_R7],decoder[R_R8]);
         op1 = regs[decoder[R_R7]];
         op2 = regs[decoder[R_R8]];
         decode(fetch());
@@ -116,10 +118,11 @@ int execute()
         printf("SUB r%d, r%d, %d\n",decoder[R_R9],decoder[R_R7],decoder[R_R10]);
         regs[decoder[R_R9]] = regs[decoder[R_R7]] - decoder[R_R10];
       }
+      if (regs[decoder[R_R9]] >= 0 ) { carry = 1;}
       break;
 
     case OP_SBC:
-      /*if (decoder[R_R5] == 0)
+      if (decoder[R_R5] == 0)
       {
         // SBC r1, r2, r3  r1 = r2 - r3 + carry -1
         printf("SBC r%d, r%d, r%d\n",decoder[R_R9],decoder[R_R7],decoder[R_R8] );
@@ -129,7 +132,7 @@ int execute()
         // SBC r1, r2, iv   r1 = r2 - iv +carry -1
         printf("SBC r%d, r%d, %d\n",decoder[R_R9],decoder[R_R7],decoder[R_R10]);
         regs[decoder[R_R9]] = regs[decoder[R_R7]] - decoder[R_R10] +carry -1;
-      }*/
+      }
       break;
 
     case OP_MOV:
@@ -158,6 +161,7 @@ int execute()
         printf("LSH r%d, r%d, %d\n",decoder[R_R9],decoder[R_R7],decoder[R_R10]);
         regs[decoder[R_R9]] = regs[decoder[R_R7]] << decoder[R_R10];
       }
+  //    if (regs[decoder[R_R9]] >> INTMAX_MAX) {carry=1}
       break;
 
     case OP_RSH:

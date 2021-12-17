@@ -48,6 +48,7 @@ void read_file(char const * file)
 void init_regs(char const * file)
 {
   int j=0;
+  int h=0;
   FILE* fregState = NULL;
   fregState = fopen(file, "r");
   char ligne[TAILLE_MAX] = "";
@@ -58,6 +59,7 @@ void init_regs(char const * file)
       uint64_t a= 1;
       for (int i = 5; i < strlen(ligne)-1; i++)
       {
+        h++;
         a=a<<4;
         //printf("%016X\n",a);
         switch (ligne[i]) {
@@ -78,7 +80,8 @@ void init_regs(char const * file)
           case 102:a+=15;break;
         }
       }
-      regs[j] = a & 0xffffffffffffffff;
+      regs[j] = a & (0xffffffffffffffff >> (64-4*h));
+      h=0;
       j++;
     }
     fclose(fregState);
@@ -107,7 +110,7 @@ void showMemory()
 {
   int i;
   printf( "******** Memory ********\n" );
-  for( i=0; i<MEMSIZ; i++ )  //nmbre de ligne dans le fichier code
+  for( i=0; i<MEMOSHOW; i++ )  //nmbre de ligne dans le fichier code
     printf( "0x%016lX\n", memory[ i ] );
 }
 

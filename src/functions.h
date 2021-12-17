@@ -7,7 +7,7 @@
 */
 
 #ifndef PROJET_FUNCTIONS_H
-#define PROJET_MFUNCTIONS_H
+#define PROJET_FUNCTIONS_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +18,7 @@
 
 #define TAILLE_MAX 40
 #define MEMO_SIZE 512
-#define MEMSIZ 10
+#define MEMOSHOW 24
 
 
 
@@ -53,7 +53,7 @@ enum //enumeration I have no idea about this , Yes I do
 extern uint64_t regs[R_COUNT];
 
 /* decode instr */
-extern char decoder[16];
+extern int8_t decoder[16];
 
 /** instruction number ***/
 enum  /* OPCPDE */
